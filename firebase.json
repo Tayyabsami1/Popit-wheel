@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "site": "svelte-wheel",
+    "rewrites": [
+      {
+        "source": "**",
+        "run": {
+          "serviceId": "app",
+          "region": "europe-west1"
+        }
+      }
+    ]
+  }
+}

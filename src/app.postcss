@@ -1,0 +1,139 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@tailwind variants;
+
+@font-face {
+  font-family: 'Quicksand';
+  src: url('/Quicksand.ttf');
+}
+
+:root [data-theme="skeleton"] {
+  --theme-font-family-base: 'Quicksand', sans-serif;
+  --theme-font-family-heading: 'Quicksand', sans-serif;
+}
+
+.modal .input-group :focus {
+  outline-style: none !important;
+}
+
+.required::after {
+  content: ' *';
+  @apply text-error-500-400-token;
+}
+
+.balloonWrapper {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 50%;
+  height: 120vh;
+  z-index: 99;
+}
+
+.balloon {
+  position: absolute;
+  width: 80px;
+  z-index: 10;
+}
+
+.popup-arrow {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  z-index: 10;
+  top: 50%;
+  transform: translate(-100%, -50%);
+}
+
+.popup-balloon {
+  position: absolute;
+  width: 80px;
+  z-index: 10;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.pop_container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+}
+
+.targetDiv {
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  top: 30%;
+  left: 0;
+}
+
+@media (max-width: 1025px) {
+  .targetDiv {
+    position: absolute;
+    top: 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  .targetDiv {
+    top: 48%;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .balloon,
+  .popup-balloon {
+    width: 50px;
+  }
+
+  .popup-arrow {
+    width: 80px;
+  }
+}
+
+@media (max-width: 548px) {
+  .targetDiv {
+    top: 25%;
+  }
+
+  .popup-arrow{
+    top: 27%;
+  }
+
+  .popup-arrow {
+    width: 60px;
+  }
+}
+
+
+@media (max-width: 380px) {
+  .targetDiv {
+    top: 28%;
+  }
+
+  .popup-arrow{
+    top: 30%;
+  }
+
+}
+
+
+@media (min-width: 1280px) {
+  .balloon,
+  .popup-balloon {
+    width: 5vw;
+  }
+
+  .popup-arrow {
+    width: 8vw;
+  }
+
+  .balloonWrapper{
+    height: 100vh;
+  }
+}
