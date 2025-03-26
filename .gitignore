@@ -11,3 +11,5 @@ vite.config.ts.timestamp-*
 /test-results
 .firebase/
 firebase-debug.log
+.env
+src/lib/server/popit-wheel-firebase-adminsdk-fbsvc-9f17ac72c1.json
