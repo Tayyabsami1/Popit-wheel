@@ -12,6 +12,17 @@
       it's a party, classroom, or team-building activity, the Spin the Wheel
       game adds an element of excitement and unpredictability.
     </p>
+
+    <p class="mt-2">
+      <span class="font-semibold">Watch a Quick Demo:</span>
+      <a
+        href="https://www.youtube.com/shorts/pFtnamrwYFU"
+        target="_blank"
+        class="text-[rgb(255,100,100)] ml-1 font-semibold"
+      >
+        Click here to see how Pop It Wheel works!
+      </a>
+    </p>
   </div>
 
   <div
