@@ -12,7 +12,8 @@
     },
     set value(value: string) {
       textarea.value = value
-      setEntries(textarea.value.split('\n'))
+      setEntries(textarea.value.split('\n').filter(line => line.trim() !== ''))
+      // setEntries(textarea.value.split('\n'))
     }
   }
 
