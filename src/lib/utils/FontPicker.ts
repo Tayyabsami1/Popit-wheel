@@ -27,7 +27,7 @@ export default class FontPicker {
       texts, wheelRadius, hubRadius, smallestAngle
     )
     if (cachedResult) return cachedResult
-    let minFontSize = 200
+    let minFontSize = 15
     const fontName = 'Quicksand'
     texts.forEach(text => {
       const fontSize = getFontSize(
@@ -95,8 +95,8 @@ const getFontSize = (
     smallestAngle,
     fontName,
     displayText,
-    3,
-    200
+    0.2,
+    100
   )
 }
 
@@ -210,10 +210,10 @@ const getCacheKey = (
  * @returns Truncated text
  */
 export const truncateText = (text: string) => {
-  if (text.length <= 18) {
+  if (text.length <= 28) {
     return text
   }
-  return text.substring(0, 17) + '…'
+  return text.substring(0, 27) + '…'
 }
 
 /**
