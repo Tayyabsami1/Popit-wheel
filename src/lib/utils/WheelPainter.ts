@@ -116,16 +116,18 @@ export default class WheelPainter {
     context.save()
     context.translate(context.canvas.width / 2, context.canvas.height / 2)
     const radius = getWheelRadius(context)
+    let newWheelEnteries = wheel
+    newWheelEnteries.entries = wheel.entries.filter(entry => entry.text.trim() !== '')
     context.font = this.fontPicker.getFont(
       context,
-      wheel.entries.map(entry => entry.text),
+      newWheelEnteries.entries.map(entry => entry.text),
       radius * 15 / 16,
-      radius * hubSizes[wheel.config.hubSize] * 17 / 16,
-      2 * Math.PI / wheel.entries.length
+      radius * hubSizes[newWheelEnteries.config.hubSize] * 17 / 16,
+      2 * Math.PI / newWheelEnteries.entries.length
     )
-    wheel.entries.forEach((_entry, index) => {
-      this.drawSlice(context, wheel, index)
-      context.rotate(-2 * Math.PI / wheel.entries.length)
+    newWheelEnteries.entries.forEach((_entry, index) => {
+      this.drawSlice(context, newWheelEnteries, index)
+      context.rotate(-2 * Math.PI / newWheelEnteries.entries.length)
     })
     context.restore()
     this.imageCache.set('slices', context.canvas)
@@ -134,13 +136,13 @@ export default class WheelPainter {
   drawSlice(context: Context, wheel: Wheel, index: number) {
     const radius = getWheelRadius(context)
     const radians = 2 * Math.PI / wheel.entries.length
-    if (wheel.config.type === 'color') {
+    if (wheel.config.type === 'color' && wheel.entries[index].text.trim() !== '') {
       const bgColor = wheel.config.colors[index % wheel.config.colors.length]
       this.drawSliceBg(context, radius, radians, bgColor)
       this.drawText(
         context, wheel.entries[index].text, radius, getTextColor(bgColor)
       )
-    } else {
+    } else if ( wheel.entries[index].text.trim() !== '') {
       this.drawText(
         context, wheel.entries[index].text, radius, 'white', 'black'
       )
