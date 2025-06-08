@@ -49,7 +49,7 @@
     type: 'component', component: 'accountDialog'
   })
 
-  let WheelComponent = $state(Wheel)
+  let WheelComponent = $state(WheelMultiThread) // Use multi-threaded wheel by default for better performance
 </script>
 
 <svelte:head>

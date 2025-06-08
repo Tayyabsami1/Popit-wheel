@@ -34,6 +34,12 @@ export const click = (state: WheelState): WheelState => {
 export const tick = (
   state: WheelState, spinTime: number, indefiniteSpin: boolean
 ): WheelState => {
+  // Reset state if ticksInPhase gets too large to prevent integer overflow
+  // This helps prevent performance degradation after multiple spins
+  if (state.ticksInPhase > 10000) {
+    state = { ...state, ticksInPhase: 0 };
+  }
+  
   const processTickForPhase: Record<Phase, WheelStateFn> = {
     demo: (state: WheelState) => ({ ...state, speed: DEMO_SPEED }),
     accelerating: (state: WheelState) => tickAcceleratingPhase(
@@ -41,8 +47,17 @@ export const tick = (
     ),
     constant: (state: WheelState) => state,
     decelerating: (state: WheelState) => tickDeceleratingPhase(state, spinTime),
-    stopped: (state: WheelState) => ({ ...state, speed: 0 })
+    stopped: (state: WheelState) => {
+      // In stopped state, actively reset properties to initial values
+      // to help prevent memory/state build-up over time
+      return { 
+        ...state, 
+        speed: 0,
+        ticksInPhase: state.ticksInPhase < 2 ? state.ticksInPhase : 0 // Keep initial ticks but reset if over
+      };
+    }
   }
+  
   return increaseTicksInPhase(
     processTickForPhase[state.phase](
       increaseAngle(state)

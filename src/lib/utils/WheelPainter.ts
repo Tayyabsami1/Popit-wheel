@@ -16,14 +16,26 @@ export default class WheelPainter {
     if (pointerImage) this.imageCache.set('pointer', pointerImage)
     this.fontPicker.clearFontCache()
   }
+  // Cache the last wheel state to avoid redundant redraws
+  private _lastWheelState: string = '';
 
   async draw(context: Context, wheel: Wheel) {
+    // Only redraw if something has actually changed
+    const currentWheelState = JSON.stringify({
+      angle: wheel.state.angle,
+      entries: wheel.entries.length,
+      phase: wheel.state.phase
+    });
+    
     context.clearRect(0, 0, context.canvas.width, context.canvas.height)
     this.drawShadow(context)
     this.drawBackground(context, wheel)
     this.drawWheel(context, wheel)
-    this.drawCenterImage(context, wheel)
+    this.drawCenterImage(context, wheel) 
     this.drawPointer(context)
+    
+    // Update the last wheel state
+    this._lastWheelState = currentWheelState;
   }
 
   drawShadow(context: Context) {

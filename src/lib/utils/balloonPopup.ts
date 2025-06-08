@@ -1,7 +1,11 @@
-import gsap from 'gsap'
+import { gsap } from 'gsap/dist/gsap.js'
 import { stopAndResetBalloons } from '$lib/utils/animations'
 
+// Use smaller, specific import for matchMedia
 const mm = gsap.matchMedia();
+
+// Limit active animations
+let isAnimating = false;
 
 function getDynamicY() {
     const pxValue = -150;
@@ -42,6 +46,13 @@ function isCollision(rect1: DOMRect, rect2: DOMRect): boolean {
 
 
 export async function startAnimation(): Promise<void> {
+    // Prevent multiple animations from running simultaneously
+    if (isAnimating) {
+        return Promise.resolve();
+    }
+    
+    isAnimating = true;
+    
     return new Promise((resolve) => {
         // Create pop container
         const popContainer = document.createElement("div");
@@ -119,18 +130,19 @@ export async function startAnimation(): Promise<void> {
 
                 const translateX = arrowPos.x - arrowRectInitial.left;
                 const translateY = arrowPos.y - arrowRectInitial.top;
-                arrowImage.style.transform = `translate(${translateX}px, ${translateY}px)`;
-
-                const arrowRect = arrowImage.getBoundingClientRect();
+                arrowImage.style.transform = `translate(${translateX}px, ${translateY}px)`;                const arrowRect = arrowImage.getBoundingClientRect();
                 if (isCollision(arrowRect, balloonRect)) {
                     resetAfterCollision(balloon, arrowImage);
                     popContainer.remove();
-                    stopAndResetBalloons()
-
+                    stopAndResetBalloons();
+                    
                     if (arrowChaseFrame) {
                         cancelAnimationFrame(arrowChaseFrame);
                         arrowChaseFrame = null;
                     }
+                    
+                    // Mark animation as complete
+                    isAnimating = false;
 
                     resolve(); // Resolve the Promise when collision occurs
                     return;
