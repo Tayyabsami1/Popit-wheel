@@ -1,4 +1,4 @@
-import { gsap } from 'gsap/dist/gsap.js'
+import { gsap } from 'gsap/dist/gsap'
 import { stopAndResetBalloons } from '$lib/utils/animations'
 
 // Use smaller, specific import for matchMedia
