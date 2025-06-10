@@ -1,7 +1,26 @@
-import adapter from '@sveltejs/adapter-node'
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
+// import adapter from '@sveltejs/adapter-node'
+// import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 
-/** @type {import('@sveltejs/kit').Config} */
+// /** @type {import('@sveltejs/kit').Config} */
+// export default {
+//   extensions: ['.svelte'],
+//   preprocess: [vitePreprocess()],
+//   vitePlugin: { inspector: true },
+//   kit: {
+//     adapter: adapter(),
+//     serviceWorker: { register: false },
+//     paths: { relative: false },
+//     typescript: {
+//       config(config) {
+//         config.include.push('../*.config.js')
+//       }
+//     }
+//   }
+// }
+
+import adapter from '@sveltejs/adapter-vercel';
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
+
 export default {
   extensions: ['.svelte'],
   preprocess: [vitePreprocess()],
@@ -12,8 +31,9 @@ export default {
     paths: { relative: false },
     typescript: {
       config(config) {
-        config.include.push('../*.config.js')
+        config.include.push('../*.config.js');
       }
     }
   }
-}
+};
+
