@@ -22,11 +22,40 @@
     body: data.winner.text,
     meta: data
   })
-
+  
   const openWinnerModal = async (e: CustomEvent<OnStoppedData>) => {
-    launchConfetti(wheelStore.config.confetti, $state.snapshot(wheelStore.config.colors))
-    if (!wheelStore.config.displayWinnerDialog) return
-    modalStore.trigger(createWinnerModal(e.detail))
+    const winner = e.detail;
+    
+    // Use a staggered approach for displaying results to prevent UI jank
+    if (!wheelStore.config.displayWinnerDialog) {
+      // If we're not showing a dialog, just show confetti after a minimal delay
+      window.requestAnimationFrame(() => {
+        launchConfetti(wheelStore.config.confetti, $state.snapshot(wheelStore.config.colors))
+      });
+      return;
+    }
+    
+    // Two-phase approach: first prepare the confetti, then show dialog
+    // This splits up CPU-intensive tasks to avoid main thread blocking
+    
+    // First phase: prepare confetti system but with minimal particles
+    // This pre-warms the system without heavy CPU usage
+    const confettiConfig = {...wheelStore.config.confetti, particles: 10};
+    setTimeout(() => {
+      launchConfetti(confettiConfig, $state.snapshot(wheelStore.config.colors))
+      
+      // Second phase: show the dialog, then increase confetti particles
+      setTimeout(() => {
+        modalStore.trigger(createWinnerModal(winner));
+        
+        // After dialog appears, increase confetti if enabled
+        if (wheelStore.config.confetti.enabled && wheelStore.config.confetti.particles > 10) {
+          setTimeout(() => {
+            launchConfetti(wheelStore.config.confetti, $state.snapshot(wheelStore.config.colors))
+          }, 100);
+        }
+      }, 30);
+    }, 0);
   }
 
   const openOpenDialog = () => modalStore.trigger({
@@ -49,7 +78,7 @@
     type: 'component', component: 'accountDialog'
   })
 
-  let WheelComponent = $state(WheelMultiThread) // Use multi-threaded wheel by default for better performance
+  let WheelComponent = $state(Wheel)
 </script>
 
 <svelte:head>

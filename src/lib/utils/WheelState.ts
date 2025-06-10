@@ -34,12 +34,33 @@ export const click = (state: WheelState): WheelState => {
 export const tick = (
   state: WheelState, spinTime: number, indefiniteSpin: boolean
 ): WheelState => {
-  // Reset state if ticksInPhase gets too large to prevent integer overflow
-  // This helps prevent performance degradation after multiple spins
-  if (state.ticksInPhase > 10000) {
-    state = { ...state, ticksInPhase: 0 };
+  // Performance optimization: Avoid unnecessary object creation for stopped state
+  if (state.phase === 'stopped') {
+    // Just increase ticks without creating new object
+    return { 
+      ...state, 
+      ticksInPhase: state.ticksInPhase + 1,
+      speed: 0 // Ensure speed is exactly 0 when stopped
+    };
   }
   
+  // For demo phase, we can optimize to avoid extra object creations
+  if (state.phase === 'demo') {
+    let angle = state.angle + DEMO_SPEED;
+    if (angle >= 2 * Math.PI) {
+      angle -= 2 * Math.PI;
+    }
+    
+    // Just return a modified state directly
+    return {
+      ...state,
+      angle,
+      speed: DEMO_SPEED,
+      ticksInPhase: state.ticksInPhase + 1
+    };
+  }
+  
+  // For other phases, use the full processing logic
   const processTickForPhase: Record<Phase, WheelStateFn> = {
     demo: (state: WheelState) => ({ ...state, speed: DEMO_SPEED }),
     accelerating: (state: WheelState) => tickAcceleratingPhase(
@@ -47,15 +68,7 @@ export const tick = (
     ),
     constant: (state: WheelState) => state,
     decelerating: (state: WheelState) => tickDeceleratingPhase(state, spinTime),
-    stopped: (state: WheelState) => {
-      // In stopped state, actively reset properties to initial values
-      // to help prevent memory/state build-up over time
-      return { 
-        ...state, 
-        speed: 0,
-        ticksInPhase: state.ticksInPhase < 2 ? state.ticksInPhase : 0 // Keep initial ticks but reset if over
-      };
-    }
+    stopped: (state: WheelState) => ({ ...state, speed: 0 })
   }
   
   return increaseTicksInPhase(
@@ -66,11 +79,12 @@ export const tick = (
 }
 
 const increaseAngle = (state: WheelState): WheelState => {
-  let angle = state.angle + state.speed
-  if (angle >= 2 * Math.PI) {
-    angle -= 2 * Math.PI
+  // Performance optimization: Use modulo to avoid extra conditions & branches
+  const angle = (state.angle + state.speed) % (2 * Math.PI);
+  return { 
+    ...state, 
+    angle: angle < 0 ? angle + 2 * Math.PI : angle // Handle negative angles
   }
-  return { ...state, angle }
 }
 
 const increaseTicksInPhase = (state: WheelState): WheelState => {

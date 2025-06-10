@@ -6,45 +6,17 @@ function getDynamicY() {
   return Math.min(pxValue, vwValue);
 }
 
-// Cache balloon images to prevent repeated loading
-const balloonImageCache: { [key: string]: HTMLImageElement } = {};
-
-// Clean up existing animations before starting new ones
-function cleanupExistingBalloons() {
-  const existingWrapper = document.querySelector(".balloonWrapper");
-  if (existingWrapper) {
-    stopAndResetBalloons();
-  }
-}
-
 export function animateBalloons() {
-  // Cleanup first to prevent multiple instances
-  cleanupExistingBalloons();
 
   const balloonWrapper = document.createElement("div");
   balloonWrapper.classList.add("balloonWrapper");
 
   document.body.appendChild(balloonWrapper);
 
-  // Generate fewer balloons for better performance
-  const balloonCount = 6; // Reduced from 10 for better performance
-  
   // Generate balloons dynamically
-  for (let i = 0; i < balloonCount; i++) {
-    const balloonIndex = (i % 5) + 1;
-    const balloonPath = `/images/balloon-${balloonIndex}.png`;
-    
-    // Use cached image or create new one
-    let balloon: HTMLImageElement;
-    
-    if (!balloonImageCache[balloonPath]) {
-      balloon = document.createElement("img");
-      balloon.src = balloonPath;
-      balloonImageCache[balloonPath] = balloon;
-    } else {
-      balloon = balloonImageCache[balloonPath].cloneNode() as HTMLImageElement;
-    }
-    
+  for (let i = 0; i < 10; i++) {
+    const balloon = document.createElement("img");
+    balloon.src = `/images/balloon-${(i % 5) + 1}.png`;
     balloon.classList.add("balloon");
     balloonWrapper.appendChild(balloon);
   }

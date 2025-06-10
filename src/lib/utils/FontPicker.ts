@@ -27,7 +27,7 @@ export default class FontPicker {
       texts, wheelRadius, hubRadius, smallestAngle
     )
     if (cachedResult) return cachedResult
-    let minFontSize = 15
+    let minFontSize = 50
     const fontName = 'Quicksand'
     texts.forEach(text => {
       const fontSize = getFontSize(
@@ -95,8 +95,8 @@ const getFontSize = (
     smallestAngle,
     fontName,
     displayText,
-    0.2,
-    100
+    20,
+    50
   )
 }
 
@@ -204,16 +204,31 @@ const getCacheKey = (
   return JSON.stringify({ texts, wheelRadius, hubRadius, smallestAngle })
 }
 
+// Cache for truncated text to avoid repeated string operations
+const truncatedTextCache = new Map<string, string>();
+
 /**
  * Truncates a text to a maximum length of 18 characters
+ * Uses caching to improve performance for repeated text
  * @param text Text to be truncated
  * @returns Truncated text
  */
 export const truncateText = (text: string) => {
-  if (text.length <= 28) {
-    return text
+  // Return from cache if available
+  if (truncatedTextCache.has(text)) {
+    return truncatedTextCache.get(text)!;
   }
-  return text.substring(0, 27) + '…'
+  
+  let result: string;
+  if (text.length <= 14) {
+    result = text;
+  } else {
+    result = text.substring(0, 13) + '…';
+  }
+  
+  // Store in cache for future use
+  truncatedTextCache.set(text, result);
+  return result;
 }
 
 /**

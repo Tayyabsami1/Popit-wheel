@@ -49,15 +49,21 @@ export default class Wheel {
       if (newIndex !== oldIndex) {
         this.onPointerIndexChanged(newIndex)
       }
-    }
-    if (
+    }    if (
       this.onStopped &&
       newState.phase !== oldState.phase &&
       newState.phase === 'stopped'
     ) {
-      this.onStopped({
-        winner: getEntryAtPointer(this), color: getColorAtPointer(this)
-      })
+      // Performance optimization: Use setTimeout to prevent blocking the main thread
+      // This helps prevent UI freeze when winner dialog appears
+      setTimeout(() => {
+        if (this.onStopped) {
+          this.onStopped({
+            winner: getEntryAtPointer(this), 
+            color: getColorAtPointer(this)
+          })
+        }
+      }, 0)
     }
     this.state = newState
   }

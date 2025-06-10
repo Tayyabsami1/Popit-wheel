@@ -25,6 +25,124 @@
     </p>
   </div>
 
+  <div class="w-full mx-auto shadow-lg rounded-2xl p-5 border border-[rgb(128,140,177)] dark:border-[(73,90,143)] mb-4">
+  <h2 class="text-2xl !font-semibold flex items-center">
+    <img src="/images/icons/pwa-64x64.png" alt="icon" class="w-8 mr-2" />
+    Having Trouble with a Slow or Glitchy Website?
+  </h2>
+
+  <p class="mt-2">
+    If a website is lagging, not loading properly, or just seems off, the issue might be caused by saved data like cookies or cache stored in your browser. These small files help websites remember you and load faster—but sometimes they get corrupted or outdated, which can lead to problems.
+  </p>
+
+  <p class="mt-2">
+    Below are simple, step-by-step instructions for clearing this saved data in Safari and Chrome on both Mac and Windows (PC). You’ll also learn how to test the website in a private or incognito window to check if the saved data is the issue.
+  </p>
+
+  <h3 class="text-xl font-semibold mt-4">MAC USERS</h3>
+
+  <h4 class="font-semibold mt-3">✅ Chrome on Mac</h4>
+  <ul class="list-disc ml-8 mt-1">
+    <li><span class="font-semibold">Step 1:</span> Try the site in Incognito Mode:
+      <ul class="list-disc ml-6 mt-1">
+        <li>Open Google Chrome.</li>
+        <li>Click the three dots (top right) &gt; New Incognito Window.</li>
+        <li>Visit the site and see if it works properly.</li>
+      </ul>
+    </li>
+    <p class="mt-2">If it works, clear the saved site data.</p>
+    <li class="mt-2"><span class="font-semibold">Step 2:</span> Clear cookies and cache for that site:
+      <ul class="list-disc ml-6 mt-1">
+        <li>Click the three dots &gt; Settings.</li>
+        <li>Go to Privacy and Security &gt; Cookies and other site data.</li>
+        <li>Click See all site data and permissions.</li>
+        <li>Search for the website.</li>
+        <li>Click the trash icon next to the site &gt; Clear.</li>
+      </ul>
+    </li>
+    <li class="mt-2"><span class="font-semibold">Step 3:</span> Reopen the website in a regular Chrome window.</li>
+  </ul>
+
+  <h4 class="font-semibold mt-4">✅ Safari on Mac</h4>
+  <ul class="list-disc ml-8 mt-1">
+    <li><span class="font-semibold">Step 1:</span> Try the site in a Private Window:
+      <ul class="list-disc ml-6 mt-1">
+        <li>Open Safari.</li>
+        <li>Click File &gt; New Private Window (or press Shift + Command + N).</li>
+        <li>Visit the website and check if it works.</li>
+      </ul>
+    </li>
+    <p class="mt-2">If it works, the issue might be with the saved data.</p>
+    <li class="mt-2"><span class="font-semibold">Step 2:</span> Clear cookies and cache for the website:
+      <ul class="list-disc ml-6 mt-1">
+        <li>Click Safari (top-left) &gt; Settings (or Preferences).</li>
+        <li>Go to the Privacy tab.</li>
+        <li>Click Manage Website Data.</li>
+        <li>Search for the website name.</li>
+        <li>Select it, then click Remove &gt; Done.</li>
+      </ul>
+    </li>
+    <li class="mt-2"><span class="font-semibold">Step 3:</span> Open the site in a regular Safari window.</li>
+  </ul>
+
+  <p class="mt-2 text-sm italic">Note: Be ready to log back in if the site requires a password.</p>
+
+  <h3 class="text-xl font-semibold mt-4">PC USERS (WINDOWS)</h3>
+
+  <h4 class="font-semibold mt-3">✅ Safari on Windows</h4>
+  <p class="ml-6 mt-1 text-red-500 italic">
+    ⚠️ Note: Safari is no longer supported on Windows by Apple. Use Chrome, Firefox, or Edge for better performance and security.
+  </p>
+
+  <h4 class="font-semibold mt-4">✅ Chrome on Windows (PC)</h4>
+  <ul class="list-disc ml-8 mt-1">
+    <li><span class="font-semibold">Step 1:</span> Try the site in Incognito Mode:
+      <ul class="list-disc ml-6 mt-1">
+        <li>Open Chrome.</li>
+        <li>Click the three dots (top right) &gt; New Incognito Window.</li>
+        <li>Go to the site and test it.</li>
+      </ul>
+    </li>
+
+    <p class="mt-2">If it works, clear the site's saved data.</p>
+    
+    <li class="mt-2"><span class="font-semibold">Step 2:</span> Clear cookies and cache for that site:
+      <ul class="list-disc ml-6 mt-1">
+        <li>Click the three dots &gt; Settings.</li>
+        <li>Go to Privacy and Security &gt; Cookies and other site data.</li>
+        <li>Click See all site data and permissions.</li>
+        <li>Search for the website.</li>
+        <li>Click the trash icon or Remove next to the site.</li>
+      </ul>
+    </li>
+    <li class="mt-2"><span class="font-semibold">Step 3:</span> Open the site again in a regular Chrome window.</li>
+  </ul>
+</div>
+
+
+
+
+  <div
+    class="w-full mx-auto shadow-lg rounded-2xl p-5 border border-[rgb(128,140,177)] dark:border-[(73,90,143)] mb-4"
+  >
+    <h2 class="text-2xl !font-semibold flex items-center gap-1">
+      <img src="/images/icons/pwa-64x64.png" alt="icon" class="w-7" />How random
+      is the wheel?
+    </h2>
+    <p class="mt-2">
+      To generate a random spin result the website uses a JavaScript programming
+      language method Crypto.getRandomValues() under the hood (where available;
+      in some old browsers Math.random() is used). The Crypto.getRandomValues()
+      method lets us get cryptographically strong random values. To guarantee
+      enough performance, the implementation is not using a truly random number
+      generator, but it is using a pseudo-random number generator seeded with a
+      value with enough entropy. The pseudo-random number generator algorithm
+      (PRNG) may vary across browsers, but is suitable for cryptographic
+      purposes, therefore, we believe it is good enough for our spin wheel use
+      case.
+    </p>
+  </div>
+
   <div
     class="w-full mx-auto shadow-lg rounded-2xl p-5 border border-[rgb(128,140,177)] dark:border-[(73,90,143)] mb-4"
   >

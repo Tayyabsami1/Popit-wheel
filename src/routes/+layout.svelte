@@ -62,29 +62,9 @@
   onMount(fullscreenStore.initialize);
   onNavigate(modalStore.close);
 
-  let webManifestLink = $derived(pwaInfo?.webManifest.linkTag ?? "");
+  // let webManifestLink = $derived(pwaInfo?.webManifest.linkTag ?? "");
 </script>
 
-<svelte:head>
-  {@html webManifestLink}
-  {#if process.env.NODE_ENV !== "development"}
-    <script async src="https://www.googletagmanager.com/gtag/js?id={PUBLIC_FIREBASE_MEASUREMENT_ID}"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-F4HD1KN7HW"></script>
-    {@html `
-      <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag() {
-          dataLayer.push(arguments);
-        }
-        gtag('js', new Date());
-
-        // Configure both Google Analytics properties
-        gtag('config', '${PUBLIC_FIREBASE_MEASUREMENT_ID}');
-        gtag('config', 'G-F4HD1KN7HW');
-      </script>
-    `}
-  {/if}
-</svelte:head>
 
 
 <Toast />

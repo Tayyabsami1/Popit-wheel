@@ -2,23 +2,11 @@ import { defineConfig } from 'vite'
 import { sveltekit } from '@sveltejs/kit/vite'
 import { purgeCss } from 'vite-plugin-tailwind-purgecss'
 import { SvelteKitPWA } from '@vite-pwa/sveltekit'
-import { ViteImageOptimizer } from 'vite-plugin-image-optimizer'
 
 export default defineConfig({
   plugins: [
     sveltekit(),
     purgeCss(),
-    ViteImageOptimizer({
-      png: {
-        quality: 80,
-      },
-      jpg: {
-        quality: 80,
-      },
-      webp: {
-        lossless: true,
-      }
-    }),
     SvelteKitPWA({
       includeAssets: [
         'pwa-64x64.png',
